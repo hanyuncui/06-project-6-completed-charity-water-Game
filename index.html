@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Water Drop Game | charity: water</title>
   <link rel="stylesheet" href="styles.css" />
+  <!-- Google Fonts: Libre Baskerville（接近 charity: water 品牌 serif） -->
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -29,11 +31,21 @@
     <div class="score-panel">
       <div class="score">Score: <span id="score">0</span></div>
       <div class="timer">Time: <span id="time">30</span>s</div>
+      <div class="difficulty">
+        <select id="difficulty">
+          <option value="easy">Easy</option>
+          <option value="normal" selected>Normal</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
       <div class="buttons">
         <button id="start-btn">Start Game</button>
         <button id="reset-btn-main">🔄 Reset Game</button>
       </div>
     </div>
+
+    <!-- 里程碑提示 -->
+    <div id="milestone-message" class="milestone-message"></div>
 
     <div id="game-container"></div>
   </div>

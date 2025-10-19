@@ -1,11 +1,11 @@
 :root {
+  --font: 'Libre Baskerville', 'Georgia', serif;
   --yellow: #ffc907;
   --blue: #2e9df7;
   --gray: #e6f7ff;
   --bad: #a0a0a0;
   --text-dark: #222;
   --text-light: #555;
-  --font: "Avenir Next", "Proxima Nova", "Helvetica Neue", Arial, sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,9 +15,25 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #fafafa;
+  /* 更美观的多层背景（主蓝色渐变 + 温暖高光 + 软雾） */
+  background-color: #f6fbff;
+  background-image:
+    radial-gradient(circle at 10% 12%, rgba(255,240,200,0.22), transparent 12%),
+    radial-gradient(circle at 88% 82%, rgba(46,157,247,0.08), transparent 22%),
+    linear-gradient(180deg, #f7fbff 0%, #def3ff 36%, #cbeefc 70%, #b6e6ff 100%),
+    linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0));
+  background-blend-mode: screen, screen, normal, normal;
+  background-attachment: fixed;
+  background-size: cover;
   font-family: var(--font);
   color: var(--text-dark);
+}
+
+/* Ensure interactive controls use the brand font */
+button, select, input, textarea {
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* 新增/替换：品牌行 & 响应性布局 */
@@ -57,14 +73,16 @@ body {
 
 /* 可见品牌文字，突出 charity: water 名称（标题风格） */
 .brand-name {
-  color: var(--blue);
-  font-weight: 900;
-  font-size: 22px;            /* 标题级字号 */
-  letter-spacing: 0.6px;
+  /* 使用 Google Fonts 中的 Libre Baskerville，接近 charity: water 的品牌 serif 感 */
+  font-family: 'Libre Baskerville', 'Georgia', serif;
+  font-weight: 400;
+  font-size: 18px; /* 缩小品牌名 */
+  letter-spacing: 0.03em;
+  color: #000;
   text-decoration: none;
+  text-transform: none;
   line-height: 1;
   padding-left: 6px;
-  text-transform: none;
   display: inline-block;
 }
 
@@ -87,7 +105,7 @@ body {
 
 .logo { width: 90px; margin-bottom: 8px; }
 
-.game-title { font-size: 44px; font-weight: 700; margin-bottom: 4px; }
+.game-title { font-size: 40px; font-weight: 700; margin-bottom: 4px; }
 .game-tagline { font-size: 18px; color: var(--text-light); margin-bottom: 12px; }
 
 .score-panel {
@@ -127,6 +145,47 @@ body {
 #reset-btn-main:hover {
   background-color: #ccc;
   transform: translateY(-1px);
+}
+
+/* 难度选择器 */
+#difficulty {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 2px solid var(--blue);
+  background: white;
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#difficulty:hover {
+  border-color: var(--yellow);
+}
+
+/* 里程碑提示样式 */
+.milestone-message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  /* 更浅的里程碑背景：柔和蓝色渐变，文字仍为深色以保证可读性 */
+  background: linear-gradient(180deg, #eaf9ff 0%, #cfeefc 60%);
+  color: #04293a; /* 深色文本，提升对比度（浅背景上更清晰） */
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 6px 18px rgba(14, 84, 122, 0.08);
+}
+
+.milestone-message.show {
+  opacity: 1;
 }
 
 
@@ -207,6 +266,8 @@ body {
   inset: 0;
   background-color: rgba(255, 255, 255, 0.9);
   animation: flashScreen 0.3s ease;
+  /* 让闪屏跟随容器的圆角，去掉方形边缘 */
+  border-radius: inherit;
 }
 
 @keyframes flashScreen {
@@ -250,7 +311,7 @@ body {
     padding: 8px 12px;
   }
   .brand-row .logo { width: 56px; }  /* 移动端适当缩小 */
-  .brand-name { font-size: 16px; font-weight: 800; } /* 保持标题感但适配屏宽 */
+  .brand-name { font-size: 15px; font-weight: 700; } /* 移动端更小的品牌名 */
 }
 
 /* 极窄屏保持垂直堆叠但居中 */
@@ -262,5 +323,5 @@ body {
     padding: 6px;
   }
   .brand-row .logo { width: 48px; }
-  .brand-name { font-size: 14px; font-weight: 800; }
+  .brand-name { font-size: 13px; font-weight: 700; }
 }
