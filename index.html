@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Water Drop Game | charity: water</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+  <div class="game-wrapper">
+    <!-- brand row: logo + visible brand name -->
+    <div class="brand-row" aria-label="charity: water">
+      <a href="https://www.charitywater.org/" target="_blank" rel="noopener noreferrer" class="brand-link">
+        <!-- 尝试本地 svg/png 再回退到线上资源，脚本在页面底部控制 -->
+        <img id="brand-logo"
+             src="img/cw-logo.svg"
+             alt="charity: water logo"
+             class="logo"
+             loading="lazy"
+             referrerpolicy="no-referrer" />
+      </a>
+      <a class="brand-name" href="https://www.charitywater.org/" target="_blank" rel="noopener noreferrer">charity: water</a>
+    </div>
+ 
+    <h1 class="game-title">Water Drop</h1>
+    <p class="game-tagline">Catch the clean drops, avoid thunder ⚡!</p>
+
+    <div class="score-panel">
+      <div class="score">Score: <span id="score">0</span></div>
+      <div class="timer">Time: <span id="time">30</span>s</div>
+      <div class="buttons">
+        <button id="start-btn">Start Game</button>
+        <button id="reset-btn-main">🔄 Reset Game</button>
+      </div>
+    </div>
+
+    <div id="game-container"></div>
+  </div>
+
+  <!-- 尝试本地多个文件名/后缀，找不到时回退到线上 SVG -->
+  <script>
+    (function() {
+      const logo = document.getElementById('brand-logo');
+      if (!logo) return;
+      const fallbacks = [
+        'img/cw-logo.svg',
+        'img/cw-logo.png',
+        'img/cw_logo.png',
+        'https://www.charitywater.org/assets/images/logos/cw-logo.svg'
+      ];
+      let i = 0;
+      logo.onerror = function() {
+        i++;
+        if (i < fallbacks.length) {
+          logo.src = fallbacks[i];
+        } else {
+          // 最后兜底：表示无法加载（保持 alt）
+          logo.removeAttribute('onerror');
+        }
+      };
+      // 触发一次，确保第一个尝试生效（有些环境不会触发 onerror 直观地）
+      logo.src = fallbacks[0];
+    })();
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
